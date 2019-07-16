@@ -100,7 +100,7 @@
 			IF exist > 0 THEN 
 			  RAISE NOTICE 'some information already taken';
 			ELSE 
-				INSERT INTO po(name,phone,school_id,password,gender,address) VALUES (name,_phone,school_id,password,gender,address);
+				INSERT INTO po(name,phone,password,gender,address) VALUES (name,_phone,password,gender,address);
 			END IF;
 		END;
 		$$";
@@ -120,7 +120,7 @@
 			IF exist > 0 THEN 
 			  RAISE NOTICE 'some information already taken';
 			ELSE 
-				INSERT INTO branch(name,phone,school_id,password,gender,address) VALUES (name,_phone,school_id,password,gender,address);
+				INSERT INTO branch(name,phone,password,gender,address) VALUES (name,_phone,password,gender,address);
 			END IF;
 		END;
 		$$";
