@@ -1,9 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/poDrawerID"
     tools:context=".program_operator.AddTeacher">
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fbfdfd"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="50dp"
+            android:paddingBottom="50dp"
+            android:weightSum="10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_height="40dp"
+                android:text="Sign Up"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                />
+            <ImageView
+                android:id="@+id/doctorProfilePicSelectionid"
+                android:layout_height="200dp"
+                android:layout_width="200dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_account_circle_primary_color_24dp"
+                />
+
+
+            <EditText
+                android:id="@+id/teacherNameId"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:hint="  Name"
+                android:drawableLeft="@drawable/ic_account_circle_primary_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+
+                />
+
+            <EditText
+                android:id="@+id/teacherGenderId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Gender"
+                android:drawableLeft="@drawable/ic_wc_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+
+            <EditText
+                android:id="@+id/teacherSchoolId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  School Name"
+                android:drawableLeft="@drawable/ic_school_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+            <EditText
+                android:id="@+id/teacherAddressId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Address"
+                android:drawableLeft="@drawable/ic_home_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+            <EditText
+                android:id="@+id/teacherBranchId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Branch"
+                android:drawableLeft="@drawable/ic_business_color_24dp"
+                android:inputType="numberDecimal"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+
+            <EditText
+                android:id="@+id/teacherAreaId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Area"
+                android:drawableLeft="@drawable/ic_business_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+            <EditText
+                android:id="@+id/teacherRegionId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Region"
+                android:drawableLeft="@drawable/ic_business_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+
+            <EditText
+                android:id="@+id/teacherPoId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Assigned Po"
+                android:drawableLeft="@drawable/ic_account_circle_primary_color_24dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+
+            <EditText
+                android:id="@+id/teacherPhoneId"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:hint="  Phone Number"
+                android:drawableLeft="@drawable/ic_local_phone_color_24dp"
+                android:inputType="phone"
+                android:textSize="15sp"
+                android:background="@drawable/button_background2"
+                />
+
+            <Button
+                android:id="@+id/studentSignUpBtn"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/button_background"
+                android:text="Sign Up"
+                android:textColor="#ffffff"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/PoNavigationID"
+
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/po_nav_menu"
+        android:background="@color/colorPrimary"
+        >
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
