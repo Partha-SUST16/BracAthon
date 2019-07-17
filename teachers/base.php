@@ -43,13 +43,13 @@
 						<a class="nav-link" href="signout.php">Sign out</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="Createteacher.php">CreateTeacher</a>
+						<a class="nav-link" href="createstudent.php">CreateStudent</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="createschool.php">CreateSchool</a>
+						<a class="nav-link" href="addproblem.php">Report Problem</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="allpending.php">ProblemStatus</a>
+						<a class="nav-link" href="performence.php">Report Performence</a>
 					</li>
 				<?php else: ?>
 				 	<li class="nav-item">
