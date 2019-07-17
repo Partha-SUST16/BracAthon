@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/ProfileGroup"
+        android:visible="true"
+        >
+
+        <item
+            android:id="@+id/menuMyDashboard"
+            android:title="Dashboard"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+        <item
+            android:id="@+id/menuMyProfile"
+            android:title="My Profile"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+        <item
+            android:id="@+id/menuEditProfile"
+            android:title="Edit Profile"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+    </group>
+
+    <group
+        android:id="@+id/studentGroup"
+        android:visible="true">
+
+        <item
+            android:id="@+id/menuTeacherList"
+            android:title="Teachers"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+        <item
+            android:id="@+id/menuAddTeacher"
+            android:title="Add Teacher"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+    </group>
+
+    <item
+        android:id="@+id/menuLogout"
+        android:title="Log Out"
+        android:icon="@drawable/ic_launcher_foreground">
+    </item>
+
+
+
+</menu>

@@ -18,7 +18,12 @@
         </activity>
         <activity android:name=".teacher.TeacherDashboard" />
         <activity android:name=".teacher.TeacherProfile" />
-        <activity android:name=".teacher.AddStudent"></activity>
+        <activity android:name=".teacher.AddStudent" />
+        <activity android:name=".teacher.TeacherLogin" />
+        <activity android:name=".program_operator.PoLogin" />
+        <activity android:name=".program_operator.PoProfile" />
+        <activity android:name=".program_operator.PoDashboard" />
+        <activity android:name=".program_operator.AddTeacher"></activity>
     </application>
 
 </manifest>

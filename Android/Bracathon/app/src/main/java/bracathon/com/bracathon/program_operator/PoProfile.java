@@ -1,4 +1,4 @@
-package bracathon.com.bracathon.teacher;
+package bracathon.com.bracathon.program_operator;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,8 +12,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import bracathon.com.bracathon.R;
+import bracathon.com.bracathon.teacher.AddStudent;
+import bracathon.com.bracathon.teacher.TeacherDashboard;
+import bracathon.com.bracathon.teacher.TeacherProfile;
 
-public class AddStudent extends AppCompatActivity {
+public class PoProfile extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -21,9 +24,9 @@ public class AddStudent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_student);
+        setContentView(R.layout.activity_po_profile);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.teacherDrawerID);
+        drawerLayout = (DrawerLayout) findViewById(R.id.poDrawerID);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
@@ -31,7 +34,7 @@ public class AddStudent extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.TeacherNavigationID);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.PoNavigationID);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -39,30 +42,29 @@ public class AddStudent extends AppCompatActivity {
 
                 if(id==R.id.menuMyDashboard)
                 {
-                    Toast.makeText(AddStudent.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),TeacherDashboard.class));
+                    Toast.makeText(PoProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),PoDashboard.class));
                 }
                 else if(id==R.id.menuMyProfile)
                 {
-                    Toast.makeText(AddStudent.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),TeacherProfile.class));
+                    Toast.makeText(PoProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
                 }
                 else if(id==R.id.menuEditProfile)
                 {
-                    Toast.makeText(AddStudent.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PoProfile.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
                 }
-                else if(id==R.id.menuStudentList)
+                else if(id==R.id.menuTeacherList)
                 {
-                    Toast.makeText(AddStudent.this,"Student List Clicked",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PoProfile.this,"Teacher List Clicked",Toast.LENGTH_SHORT).show();
                 }
-                else if(id == R.id.menuAddStudent)
+                else if(id == R.id.menuAddTeacher)
                 {
-                    Toast.makeText(AddStudent.this,"Add Student CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),AddStudent.class));
+                    Toast.makeText(PoProfile.this,"Add teacher CLICKED",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),AddTeacher.class));
                 }
                 else if(id == R.id.menuLogout)
                 {
-                    Toast.makeText(AddStudent.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PoProfile.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
@@ -70,8 +72,9 @@ public class AddStudent extends AppCompatActivity {
 
         ///Drawer & NavigationBar ends.
 
-    }
 
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
