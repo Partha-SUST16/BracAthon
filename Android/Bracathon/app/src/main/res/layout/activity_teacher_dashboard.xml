@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/teacherDrawerID"
+    tools:context=".teacher.TeacherDashboard"
+    android:orientation="vertical"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Attendance Chart"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:padding="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp">
+
+                <me.ithebk.barchart.BarChart
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/attendance_bar_chart"
+                    app:bar_width="15dp"
+                    app:bar_color="@color/colorPrimary"
+                    app:bar_text_color="#000000"
+                    app:bar_type="vertical"
+                    app:bar_text_size="10sp"
+                    app:bar_show_auto_color="false"
+                    app:bar_max_value="100"
+                    app:bar_spaces = "5dp"
+                    app:bar_show_value="true"
+                    app:bar_show_animation="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="#e4e4e4"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/TeacherNavigationID"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/teacher_nav_menu"
+        android:background="@color/colorPrimary"
+        >
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
