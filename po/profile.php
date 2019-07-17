@@ -44,7 +44,7 @@
 			<tbody>
 				<?php for($i=0; $i<count($poList); $i++): ?>
 					<tr>
-						<td><a href="potrack.php?id=<?php echo $poList[$i]->id; ?>"><?php echo $poList[$i]->id; ?></a></td>
+						<td><a href="teacherdashboard.php?id=<?php echo $poList[$i]->id; ?>"><?php echo $poList[$i]->id; ?></a></td>
 						<td><?php echo $poList[$i]->name; ?></td>
 					</tr>
 				<?php endfor; ?>
