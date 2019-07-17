@@ -34,7 +34,7 @@
 			<ul class="navbar-nav">
 				<?php if(isset($_SESSION['userid'])): ?>
 				<li class="nav-item">
-					<a class="nav-link">Dashboard</a>
+					<a class="nav-link" href="dashboard.php">Dashboard</a>
 				</li>
 				<li class="nav-item">
 						<a class="nav-link" href="profile.php">Profile</a>
@@ -43,7 +43,7 @@
 						<a class="nav-link" href="signout.php">Sign out</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="createpo.php">CreatePO</a>
+						<a class="nav-link" href="createbranch.php">CreateBranchManager</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="problemlist.php">ProblemList</a>

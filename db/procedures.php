@@ -140,7 +140,7 @@
 			IF exist > 0 THEN 
 			  RAISE NOTICE 'some information already taken';
 			ELSE 
-				INSERT INTO regional(name,phone,school_id,password,gender,address) VALUES (name,_phone,school_id,password,gender,address);
+				INSERT INTO regional(name,phone,password,gender,address) VALUES (name,_phone,password,gender,address);
 			END IF;
 		END;
 		$$";

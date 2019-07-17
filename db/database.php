@@ -13,8 +13,6 @@ require_once 'functions.php';
 				$this->migrateTable();
 				$this->migratePeocedure();
 				$this->migrateFunction();
-
-				echo "success";
 			} catch (Exception $e) {
 				$this->_ref = NULL;
 			}
