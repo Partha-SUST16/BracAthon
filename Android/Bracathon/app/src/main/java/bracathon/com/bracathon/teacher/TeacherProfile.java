@@ -13,12 +13,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import bracathon.com.bracathon.R;
 
 public class TeacherProfile extends AppCompatActivity {
 
     private TextView teacherName, teacherSchool, teacherGender, teacherAddress, teacherBranch,
             teacherArea,teacherRegion,teacherPo,teacherPhone;
+    int schoolid,userid;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -46,7 +50,10 @@ public class TeacherProfile extends AppCompatActivity {
                 if(id==R.id.menuMyDashboard)
                 {
                     Toast.makeText(TeacherProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),TeacherDashboard.class));
+                    Intent i = new Intent(getApplicationContext(),TeacherDashboard.class);
+                    i.putExtra("userid",userid);
+                    i.putExtra("schoolid",schoolid);
+                    startActivity(i);
                 }
                 else if(id==R.id.menuMyProfile)
                 {
@@ -85,12 +92,28 @@ public class TeacherProfile extends AppCompatActivity {
         teacherRegion = (TextView)findViewById(R.id.regionNameID);
         teacherPo = (TextView)findViewById(R.id.poNameID);
         teacherPhone = (TextView)findViewById(R.id.teacherPhoneID);
+        ini();
 
 
     }
 
 
 
+    private void ini(){
+        try {
+            JSONObject obj = new JSONObject(getIntent().getStringExtra("information"));
+            teacherName.setText(obj.getString("teacher_name"));
+            teacherSchool.setText(obj.getString("school_name"));
+            teacherPhone.setText(obj.getString("phone"));
+            teacherPo.setText(obj.getString("po_name"));
+            teacherAddress.setText(obj.getString("address"));
+            teacherGender.setText(obj.getString("gender"));
+             schoolid = (obj.getInt("school_id"));
+             userid = (obj.getInt("teacher_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return actionBarDrawerToggle.onOptionsItemSelected(item) ||super.onOptionsItemSelected(item);

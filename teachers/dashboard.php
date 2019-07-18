@@ -4,7 +4,7 @@
 	<title>DashBoard</title>
 <?php endblock() ?>
 
-<?php startblock('container') ?>
+
 	<?php 
 		$userid = $_SESSION['userid'];
 		$school_id = $_SESSION['schoolid'];
@@ -17,7 +17,28 @@
 			$totalStudent = $col['0']+$col['1']+$col['2'];
 		$res = pg_query($db->getRefference(),"SELECT student FROM getallSchools() WHERE id = $school_id;");
 		$row = pg_fetch_row($res);
+
+		$studentList = [];
+		$query = "SELECT id,name FROM student WHERE school_id = $school_id;";
 		
+		$res = pg_query($db->getRefference(),$query);
+		while($data = pg_fetch_object($res)){
+			array_push($studentList, $data);
+		}
+		$studentName = [];
+		for($i=0;$i<COUNT($studentList);$i++){
+			$studentName[$i] = $studentList[$i]->name;
+		}
+	
+		$attendenceList = array();
+		for($i=0;$i<count($studentList);$i++){
+			$student_id = $studentList[$i]->id;
+			$query = "SELECT status FROM attendence WHERE school_id = $school_id AND student_id = $student_id AND status  = 1;";
+			$res = pg_query($db->getRefference(),$query);
+			$col = pg_fetch_all_columns($res);
+			$dummy =COUNT($col);
+			array_push($attendenceList,$dummy);
+		}	
 
 		$percentageA = (($gradeA)/$totalStudent)*100.0;
 		$percentageB = (($gradeB)/$totalStudent)*100.0;
@@ -32,12 +53,12 @@
 
 
 	 ?>
-<?php endblock() ?>
+
 
 <div class="d-flex justify-content-center">
 	<p4><?php echo $percentageA; ?></p4><br>
 	<p4><?php echo $percentageB; ?></p4><br>
-	<p4><?php echo $percentageC; ?></p4><br>
+	<p4><?php echo json_encode( $attendenceList); ?></p4><br>
 	<?php if($totalStudent==0): ?>
 		<p>No student available.</p>
 	<?php else : ?>
@@ -45,12 +66,15 @@
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
+		<br><br>
+		<canvas id ="attendence"></canvas>
 	</div>
 <?php endif; ?>
 
 <script>
 	var performenceChart = document.getElementById("performence");
 	var problemChart = document.getElementById("problem");
+	var attendenceChart = document.getElementById("attendence");
 	Chart.defaults.global.defaultFontFamily = "Lato";
 	Chart.defaults.global.defaultFontSize = 18;
 	var grade = {
@@ -108,6 +132,36 @@
 					  type: 'bar',
 					  data: percentage,
 					  options : chartOp
+					});
+	var problems3 = {
+		label : 'Attendence',
+		data: 
+<?php echo json_encode($attendenceList); ?>,
+		backgroundColor : 
+            'rgba(255, 206, 86, 0.6)',
+		borderWidth: 1,
+  		yAxisID: "y-axis-attendence"
+	};
+	var percentage3 = {
+		labels :<?php echo json_encode($studentName); ?>,
+		datasets:[problems3]
+	}
+
+	var chartOpt = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-attendence"
+		    }]
+		  }
+		};
+	var kara =  new Chart(attendenceChart, {
+					  type: 'bar',
+					  data: percentage3,
+					  options : chartOpt
 					});
 
 

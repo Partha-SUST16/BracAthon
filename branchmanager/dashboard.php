@@ -17,6 +17,8 @@
 		$minorProblem = 0;
 		$majorProblem = 0;
 	$poList = [];
+	$studentName = [];
+	$attendenceList = array();
 	$query = "SELECT po_id FROM branchpo WHERE branch_id = $branch_id;";
 	$res = pg_query($db->getRefference(),$query);
 		while($data = pg_fetch_object($res)){
@@ -45,6 +47,28 @@
 			$gradeB = $gradeB + $col['1'];
 			$gradeC = $gradeC + $col['2'];
 			$totalStudent =$totalStudent+$col['0']+$col['1']+$col['2'];
+			//attendence
+			$studentList = [];
+			$query = "SELECT id,name FROM student WHERE school_id = $school_id;";
+			
+			$res = pg_query($db->getRefference(),$query);
+			while($data = pg_fetch_object($res)){
+				array_push($studentList, $data);
+			}
+			
+			for($i=0;$i<COUNT($studentList);$i++){
+				$studentName[$i] = $studentList[$i]->name;
+			}
+		
+			
+			for($i=0;$i<count($studentList);$i++){
+				$student_id = $studentList[$i]->id;
+				$query = "SELECT status FROM attendence WHERE school_id = $school_id AND student_id = $student_id AND status  = 1;";
+				$res = pg_query($db->getRefference(),$query);
+				$col = pg_fetch_all_columns($res);
+				$dummy =COUNT($col);
+				array_push($attendenceList,$dummy);
+			}
 
 			//problem
 			$res = pg_query($db->getRefference(),"SELECT COUNT(id) FROM problem WHERE school_id = $school_id AND is_solved = false GROUP BY catagory;");
@@ -81,10 +105,13 @@
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
+		<br><br>
+		<canvas id ="attendence"></canvas>
 	</div>
 	<script>
 		var performenceChart = document.getElementById("performence").getContext("2d");
 		var problemChart = document.getElementById("problem");
+		var attendenceChart = document.getElementById("attendence");
 		Chart.defaults.global.defaultFontFamily = "Lato";
 		Chart.defaults.global.defaultFontSize = 18;
 		var problems = {
@@ -147,5 +174,36 @@
 						  data: percentage_,
 						  options : chartOp_
 						});
+
+		var problems3 = {
+		label : 'Attendence',
+		data: 
+<?php echo json_encode($attendenceList); ?>,
+		backgroundColor : 
+            'rgba(255, 206, 86, 0.6)',
+		borderWidth: 1,
+  		yAxisID: "y-axis-attendence"
+	};
+	var percentage3 = {
+		labels :<?php echo json_encode($studentName); ?>,
+		datasets:[problems3]
+	}
+
+	var chartOpt = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-attendence"
+		    }]
+		  }
+		};
+	var kara =  new Chart(attendenceChart, {
+					  type: 'bar',
+					  data: percentage3,
+					  options : chartOpt
+					});
 	</script>
 </div>

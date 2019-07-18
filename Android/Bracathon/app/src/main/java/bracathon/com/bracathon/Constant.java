@@ -7,4 +7,5 @@ public class Constant {
     private static final String ROOT_Regional = "http://192.168.0.15/bracathon/regional/";
     ///Teachers
     public static final String teacher_login = ROOT_Teacher+"login.php";
+    public static final String teacher_dashboard = ROOT_Teacher+"dashboard.php";
 }

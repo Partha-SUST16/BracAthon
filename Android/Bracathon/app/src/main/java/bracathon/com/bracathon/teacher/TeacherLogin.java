@@ -71,16 +71,14 @@ public class TeacherLogin extends AppCompatActivity {
                             Log.d("Check","["+response+"]");
                             JSONObject obj = new JSONObject(response);
                             if(!obj.getBoolean("error")){
-                                SharedPrefManager.getInstance(getApplicationContext())
-                                        .userLogin(
-                                                //obj.getInt("id"),
-                                                Integer.toString(obj.getInt("teacher_id"))
-                                        );
-
+                                Toast.makeText(getApplicationContext(),"Successfull", Toast.LENGTH_LONG).show();
+                               /* Data.schoolid = Integer.toString(obj.getInt("school_id"));
+                                Data.userid = Integer.toString(obj.getInt("teacher_id"));*/
+                                Toast.makeText(getApplicationContext(),"Successfull", Toast.LENGTH_LONG).show();
                                 Intent i = new Intent(getApplicationContext(), TeacherProfile.class);
                                 i.putExtra("information", obj.toString());
                                 startActivity(i);
-                                Toast.makeText(getApplicationContext(),"Successfull", Toast.LENGTH_LONG).show();
+
                                 //finish();
                             }else{
                                 Toast.makeText(
