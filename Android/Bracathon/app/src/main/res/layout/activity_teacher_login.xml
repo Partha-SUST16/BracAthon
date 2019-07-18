@@ -49,7 +49,7 @@
                 android:layout_marginBottom="10dp"
                 android:hint="  Username"
                 android:drawableLeft="@drawable/ic_account_circle_primary_color_24dp"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:textSize="15sp"
                 android:background="@drawable/button_background2"
 

@@ -21,12 +21,11 @@ public class SharedPrefManager {
         }
         return mInstance;
     }
-    public boolean userLogin(String username, String email){
+    public boolean userLogin(String username){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_USERNAME,username);
-        editor.putString(KEY_USER_EMAIL,email);
         editor.apply();
         return true;
     }

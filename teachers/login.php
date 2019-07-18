@@ -7,6 +7,7 @@
 
 <?php startblock('content') ?>
 <?php 
+$result = [];
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 		$username = $_POST['username'];
 		$password = $_POST['password'];
@@ -18,14 +19,18 @@
 		$db = DB::connection();
 		$res = pg_query($db->getRefference(),$query);
 		$obj = pg_fetch_object($res);
+		
 		if($obj){
 			$_SESSION['valid'] = true;
 		 	$_SESSION['timeout'] = time();
 		 	$_SESSION['userid'] = $obj->id;
 		 	$_SESSION['schoolid']=$obj->school_id;
+		 	$result['teacher_id'] = $obj->id;
+		 	$result['error'] = false;
 		 	header('Location: profile.php');
 		}
 		else {
+			$result['error']= true;
 		 		echo '
 		 			<div class="d-flex justify-content-center">
 			 			<div class="col-md-3">
@@ -37,6 +42,7 @@
 		 		';
 		 	}
 	}
+	echo json_encode($result);
  ?>
   <div class="d-flex justify-content-center mt-3">
 		<div class="col-md-3 list-group-item list-group-item-success">

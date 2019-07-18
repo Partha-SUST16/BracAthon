@@ -9,12 +9,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import bracathon.com.bracathon.R;
 
 public class TeacherProfile extends AppCompatActivity {
 
+    private TextView teacherName, teacherSchool, teacherGender, teacherAddress, teacherBranch,
+            teacherArea,teacherRegion,teacherPo,teacherPhone;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -70,6 +74,17 @@ public class TeacherProfile extends AppCompatActivity {
         });
 
         ///Drawer & NavigationBar ends.
+
+
+        teacherName = (TextView)findViewById(R.id.teacherNameID);
+        teacherSchool =(TextView) findViewById(R.id.schoolNameID);
+        teacherGender = (TextView)findViewById(R.id.teacherGenderID);
+        teacherAddress = (TextView)findViewById(R.id.teacherAddressID);
+        teacherBranch = (TextView)findViewById(R.id.branchNameID);
+        teacherArea = (TextView)findViewById(R.id.areaNameID);
+        teacherRegion = (TextView)findViewById(R.id.regionNameID);
+        teacherPo = (TextView)findViewById(R.id.poNameID);
+        teacherPhone = (TextView)findViewById(R.id.teacherPhoneID);
 
 
     }
