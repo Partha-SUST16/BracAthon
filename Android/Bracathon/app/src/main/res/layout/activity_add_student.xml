@@ -71,18 +71,6 @@
                 />
 
             <EditText
-                android:id="@+id/studentSchoolID"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:hint="  Enter School ID"
-                android:drawableLeft="@drawable/ic_school_color_24dp"
-                android:inputType="text"
-                android:textSize="15sp"
-                android:background="@drawable/button_background2"
-                />
-            <EditText
                 android:id="@+id/studentFatherNameID"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"

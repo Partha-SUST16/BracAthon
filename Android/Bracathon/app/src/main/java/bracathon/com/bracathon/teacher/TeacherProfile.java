@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class TeacherProfile extends AppCompatActivity {
     private TextView teacherName, teacherSchool, teacherGender, teacherAddress, teacherBranch,
             teacherArea,teacherRegion,teacherPo,teacherPhone;
     int schoolid,userid;
+    String username;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -53,6 +55,7 @@ public class TeacherProfile extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(),TeacherDashboard.class);
                     i.putExtra("userid",userid);
                     i.putExtra("schoolid",schoolid);
+                    i.putExtra("username",username);
                     startActivity(i);
                 }
                 else if(id==R.id.menuMyProfile)
@@ -108,8 +111,8 @@ public class TeacherProfile extends AppCompatActivity {
             teacherPo.setText(obj.getString("po_name"));
             teacherAddress.setText(obj.getString("address"));
             teacherGender.setText(obj.getString("gender"));
-             schoolid = (obj.getInt("school_id"));
-             userid = (obj.getInt("teacher_id"));
+            Data.school_id = obj.getString("school_id");
+            Data.user_id = obj.getString("teacher_id");
         } catch (JSONException e) {
             e.printStackTrace();
         }

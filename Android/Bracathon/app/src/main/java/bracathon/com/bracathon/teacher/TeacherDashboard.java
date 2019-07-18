@@ -17,15 +17,20 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import bracathon.com.bracathon.Constant;
@@ -36,17 +41,25 @@ import bracathon.com.bracathon.SharedPrefManager;
 import me.ithebk.barchart.BarChart;
 import me.ithebk.barchart.BarChartModel;
 
+
 public class TeacherDashboard extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ProgressDialog progressDialog;
     private SharedPrefManager sharedPrefManager;
-    int school,user;
+    int school;
+    int user;
+    String username;
     private Button testB;
+    List<Double> arr ;
+    List<Double> performence ;;
+    BarChart barChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        arr = new ArrayList<>();
+        performence = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
@@ -99,60 +112,87 @@ public class TeacherDashboard extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         school = (int) extras.getInt("schoolid");
         user = extras.getInt("userid");
+        Toast.makeText(getApplicationContext(),Integer.toString(user),Toast.LENGTH_LONG).show();
+        Log.d("Check",Integer.toString(user));
+        username =extras.getString("username");
         testB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arr.clear();
+                performence.clear();
                 getValue();
             }
         });
 
-        BarChart barChart = (BarChart) findViewById(R.id.attendance_bar_chart);
-        barChart.setBarMaxValue(100);
+
 
         //Add single bar
-        BarChartModel barChartModel;
 
-        for(int i=0;i<10;i++){
-            barChartModel = new BarChartModel();
-            if(i%2==0){
-                barChartModel.setBarValue(50+i*5);
-                barChartModel.setBarText(""+(50+i*5));
-            }
-            else{
-                barChartModel.setBarValue(50-i*5);
-                barChartModel.setBarText(""+(50-i*5));
-            }
 
-            barChartModel.setBarColor(Color.parseColor("#9C27B0"));
-            barChartModel.setBarTag(null); //You can set your own tag to bar model
-            barChart.addBar(barChartModel);
-        }
     }
     private void getValue(){
        // progressDialog.show();
+         barChart = (BarChart) findViewById(R.id.attendance_bar_chart);
+        barChart.setBarMaxValue(100);
+        Toast.makeText(getApplicationContext(),Data.school_id,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),Data.user_id,Toast.LENGTH_LONG).show();
         StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                Constant.teacher_dashboard,
+                Request.Method.GET,
+                Constant.teacher_dashboard+"?id="+Integer.parseInt(Data.user_id)+"&school="+Integer.parseInt(Data.school_id),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //progressDialog.dismiss();
+                       // progressDialog.dismiss();
                         try {
                             Log.d("Check","["+response+"]");
                             JSONObject obj = new JSONObject(response);
                             if(!obj.getBoolean("error")){
-                                Toast.makeText(getApplicationContext(),"Successfull", Toast.LENGTH_LONG).show();
+
+                                arr.add((double) obj.getInt("major"));
+                                arr.add((double) obj.getInt("minor"));
+                                arr.add((double) obj.getInt("normal"));
+                                performence.add((double) obj.getInt("a"));
+                                performence.add((double) obj.getInt("b"));
+                                performence.add((double) obj.getInt("c"));
+                                JSONArray bal = obj.getJSONArray("student");
+                                for(int i =0;i<bal.length();i++)
+                                    Log.d("Check",bal.getString(i));
+                                    //Toast.makeText(getApplicationContext(),bal.getString(i), Toast.LENGTH_LONG).show();
+                                JSONArray ho = obj.getJSONArray("attendence");
+                                for(int i =0;i<bal.length();i++)
+                                    Log.d("Check",ho.getString(i));
+                                BarChartModel barChartModel = new BarChartModel();
+                                double  major = arr.get(0);
+                                double minor = arr.get(1);
+                                double normal =arr.get(2);
+
+                                barChartModel.setBarValue((int)major);
+                                barChartModel.setBarText("Major");
+                                barChartModel.setBarColor(Color.parseColor("#9C27B0"));
+                                barChart.addBar(barChartModel);
+                                BarChartModel barChartModel1 = new BarChartModel();
+                                barChartModel1.setBarValue((int)minor);
+                                barChartModel1.setBarText("Minor");
+                                barChartModel1.setBarColor(Color.parseColor("#9C27B0"));
+                                barChart.addBar(barChartModel1);
+                                //finish();
+                                BarChartModel barChartModel2 = new BarChartModel();
+                                barChartModel2.setBarValue((int)normal);
+                                barChartModel2.setBarText("Normal");
+                                barChartModel2.setBarColor(Color.parseColor("#9C27B0"));
+                                barChart.addBar(barChartModel2);
+                                //Toast.makeText(getApplicationContext(),Double.toString(arr.get(2)), Toast.LENGTH_LONG).show();
                                 //finish();
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),
-                                        obj.getString("message")+"HELLO",
+                                        obj.getString("message"),
                                         Toast.LENGTH_LONG
                                 ).show();
-                                Log.d("ErrorHI","["+obj.getString("message")+"]");
+                                Log.d("Error","["+obj.getString("message")+"]");
                             }
                         } catch (JSONException e) {
-                            Log.d("ErrorJO","["+e.getMessage()+"]");
+                            Log.d("Error","["+e.getMessage()+"]");
                         }
                     }
                 },
@@ -163,24 +203,39 @@ public class TeacherDashboard extends AppCompatActivity {
 
                         Toast.makeText(
                                 getApplicationContext(),
-                                "["+error.getMessage()+"]"+"522",
+                                "["+error.getMessage()+"]",
                                 Toast.LENGTH_LONG
                         ).show();
-                        Log.d("ErrorHl","["+error.getMessage()+"]");
+                        Log.d("Error","["+error.getMessage()+"]");
                     }
                 }
-        ){
+        ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("userid",Integer.toString(user));
-                params.put("schoolid", Integer.toString(school));
-                return params;
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                if (response.headers == null)
+                {
+                    // cant just set a new empty map because the member is final.
+                    response = new NetworkResponse(
+                            response.statusCode,
+                            response.data,
+                            Collections.<String, String>emptyMap(), // this is the important line, set an empty but non-null map.
+                            response.notModified,
+                            response.networkTimeMs);
+
+
+                }
+
+                return super.parseNetworkResponse(response);
             }
 
         };
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+        Toast.makeText(getApplicationContext(),Double.toString(arr.size()), Toast.LENGTH_LONG).show();
+
+
+
+
     }
 
     @Override

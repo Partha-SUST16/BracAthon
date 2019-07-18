@@ -36,8 +36,7 @@
 		 	$result['address'] = $obj->address;
 		 	$result['po_name'] = $po_name;
 		 	$result['error'] = false;
-		 	$_SESSION['userid'] = $obj->id;
-		 	$_SESSION['schoolid'] = $obj->school_id;
+		 	$result['school_id'] = $obj->school_id;
 		 	//header('Location: profile.php');
 		}
 		else {
