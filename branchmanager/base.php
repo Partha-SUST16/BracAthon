@@ -33,8 +33,8 @@
 		<div class="collapse navbar-collapse" id="navbarNav"">
 			<ul class="navbar-nav">
 				<?php if(isset($_SESSION['userid'])): ?>
-				<li class="nav-item">
-					<a class="nav-link">Dashboard</a>
+				<li class="nav-item" >
+					<a class="nav-link" href="dashboard.php">Dashboard</a>
 				</li>
 				<li class="nav-item">
 						<a class="nav-link" href="profile.php">Profile</a>

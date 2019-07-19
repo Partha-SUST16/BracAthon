@@ -101,17 +101,21 @@
 	<!-- <h4><?php echo $gradeC; ?></h4><br>
 	<h4><?php echo $gradeA; ?></h4><br>
 	<h4><?php echo $totalStudent ?></h4> -->
-	<div class="container">
+	<div class="container col-md-5">
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
 		<br><br>
 		<canvas id ="attendence"></canvas>
+		<br><br>
+		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
 	</div>
 	<script>
 		var performenceChart = document.getElementById("performence").getContext("2d");
 		var problemChart = document.getElementById("problem");
 		var attendenceChart = document.getElementById("attendence");
+		var maleFemale = document.getElementById("maleFemale");
+
 		Chart.defaults.global.defaultFontFamily = "Lato";
 		Chart.defaults.global.defaultFontSize = 18;
 		var problems = {
@@ -205,5 +209,38 @@
 					  data: percentage3,
 					  options : chartOpt
 					});
+	/////////////////
+	var da = {
+		label : 'Male Female Ratio',
+		data: [40,60],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(maleFemale, {
+					  type: 'pie',
+					  data: ma,
+					  options : char
+					});
+
 	</script>
 </div>
