@@ -8,12 +8,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import bracathon.com.bracathon.Constant;
 import bracathon.com.bracathon.R;
+import bracathon.com.bracathon.RequestHandler;
+import bracathon.com.bracathon.program_operator.PoProfile;
 
 public class AddPerformance extends AppCompatActivity {
 
@@ -87,6 +104,13 @@ public class AddPerformance extends AppCompatActivity {
         grade = (EditText) findViewById(R.id.selectGradeID);
         insert = (Button) findViewById(R.id.insertbtnId);
 
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertProcess();
+            }
+        });
+
 
     }
     @Override
@@ -94,7 +118,65 @@ public class AddPerformance extends AppCompatActivity {
         return actionBarDrawerToggle.onOptionsItemSelected(item) ||super.onOptionsItemSelected(item);
     }
 
+    private void insertProcess(){
+        String id = studentID.getText().toString().trim();
+        final String exam = examID.getText().toString().trim();
+        final String subject  = subjectName.getText().toString().trim();
+        final String Grade = grade.getText().toString().trim();
 
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constant.performence+"?id="+Integer.parseInt(id)+"&school="+Integer.parseInt(Data.school_id),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //progressDialog.dismiss();
+                        try {
+                            Log.d("Check","["+response+"]");
+                            JSONObject obj = new JSONObject(response);
+                            if(!obj.getBoolean("error")){
+                                Toast.makeText(getApplicationContext(),"Successfull", Toast.LENGTH_LONG).show();
+                                //finish();
+                            }else{
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        obj.getString("message"),
+                                        Toast.LENGTH_LONG
+                                ).show();
+                                Log.d("Error","["+obj.getString("message")+"]");
+                            }
+                        } catch (JSONException e) {
+                            Log.d("Error","["+e.getMessage()+"]");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //progressDialog.dismiss();
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "["+error.getMessage()+"]",
+                                Toast.LENGTH_LONG
+                        ).show();
+                        Log.d("Error","["+error.getMessage()+"]");
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("exam", exam);
+                params.put("subject", subject);
+                params.put("grade",Grade);
+                return params;
+            }
+
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
     @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){

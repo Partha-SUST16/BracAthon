@@ -9,8 +9,9 @@ public class Constant {
     public static final String teacher_login = ROOT_Teacher+"login.php";
     public static final String teacher_dashboard = ROOT_Teacher+"dash.php";
     public static final String create_student = ROOT_Teacher+"addstudent.php";
-
+    public static final String performence = ROOT_Teacher+"addperformence.php";
 
     ///PO
     public static final String po_login = ROOT_PO+"login.php";
+
 }
