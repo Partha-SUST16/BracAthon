@@ -51,6 +51,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href="allpending.php">ProblemStatus</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="questionlist.php">Routine Question</a>
+					</li>
 				<?php else: ?>
 				 	<li class="nav-item">
 						<a class="nav-link" href="login.php">Sign in</a>

@@ -21,6 +21,9 @@
 		$teacherList = [];
 		$studentName = [];
 		$attendenceList = array();
+		$schoolName = [];
+		$schoolAttendence = array();
+		$studentid = [];
 		$query = "SELECT teacher_id FROM poteacher WHERE po_id = $userid;";
 		$res = pg_query($db->getRefference(),$query);
 		while($data = pg_fetch_object($res)){
@@ -53,6 +56,8 @@
 			
 			for($i=0;$i<COUNT($studentList);$i++){
 				$studentName[$i] = $studentList[$i]->name;
+								array_push($studentid,$studentList[$i]->id);
+
 			}
 		
 			
@@ -64,6 +69,24 @@
 				$dummy =COUNT($col);
 				array_push($attendenceList,$dummy);
 			}
+
+			///////////
+			$test = pg_query($db->getRefference(),"SELECT name FROM school WHERE id = $school_id;");
+			$row = pg_fetch_row($test);
+			$school_name = $row['0'];
+			array_push($schoolName,$row);
+			$temp = [];$total = 0;$mx = 0;
+			for($p=0;$p<COUNT($studentid);$p++){
+				$test = pg_query($db->getRefference(),"SELECT COUNT(_date) FROM attendence WHERE student_id = $studentid[$p] AND school_id=$school_id;");
+				$cola = pg_fetch_row($test);
+				$gm = $cola['0'];
+				$total = $total+$gm;
+				$mx = max($mx,$gm);
+				//array_push($temp,$gm);
+			}
+			$ratio = ($total/($mx*COUNT($studentid)))*100.0;
+			
+				array_push($schoolAttendence,$ratio);
 
 
 
@@ -101,12 +124,14 @@
 	<!-- <h4><?php echo $gradeC; ?></h4><br>
 	<h4><?php echo $gradeA; ?></h4><br>
 	<h4><?php echo $totalStudent ?></h4> -->
-	<div class="container">
+	<div class="container col-md-5">
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
-				<br><br>
+		<br><br>
 		<canvas id ="attendence"></canvas>
+		<br><br>
+		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
 	</div>
 	<script>
 		var performenceChart = document.getElementById("performence").getContext("2d");
@@ -178,14 +203,14 @@
 		var problems3 = {
 		label : 'Attendence',
 		data: 
-<?php echo json_encode($attendenceList); ?>,
+<?php echo json_encode($schoolAttendence); ?>,
 		backgroundColor : 
             'rgba(255, 206, 86, 0.6)',
 		borderWidth: 1,
   		yAxisID: "y-axis-attendence"
 	};
 	var percentage3 = {
-		labels :<?php echo json_encode($studentName); ?>,
+		labels :<?php echo json_encode($schoolName); ?>,
 		datasets:[problems3]
 	}
 
@@ -204,6 +229,37 @@
 					  type: 'bar',
 					  data: percentage3,
 					  options : chartOpt
+					});
+	var da = {
+		label : 'Male Female Ratio',
+		data: [40,60],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(maleFemale, {
+					  type: 'pie',
+					  data: ma,
+					  options : char
 					});
 	</script>
 </div>

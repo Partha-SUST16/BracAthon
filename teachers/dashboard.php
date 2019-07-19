@@ -38,8 +38,18 @@
 			$col = pg_fetch_all_columns($res);
 			$dummy =COUNT($col);
 			array_push($attendenceList,$dummy);
-		}	
-
+		}
+		$query = "SELECT COUNT(id) FROM student WHERE gender='F';";
+		$res = pg_query($db->getRefference(),$query);
+		$row = pg_fetch_row($res);
+		$female = $row['0'];
+		$query = "SELECT COUNT(id) FROM student WHERE gender='M';";
+		$res = pg_query($db->getRefference(),$query);
+		$row = pg_fetch_row($res);
+		$male = $row['0'];
+		$total = $male+$female;
+		$male = ($male/$total)*100.0;
+		$female = ($female/$total)*100.0;
 		$percentageA = (($gradeA)/$totalStudent)*100.0;
 		$percentageB = (($gradeB)/$totalStudent)*100.0;
 		$percentageC = (($gradeC)/$totalStudent)*100.0;
@@ -56,18 +66,18 @@
 
 
 <div class="d-flex justify-content-center">
-	<p4><?php echo $percentageA; ?></p4><br>
-	<p4><?php echo $percentageB; ?></p4><br>
-	<p4><?php echo json_encode( $attendenceList); ?></p4><br>
+	<h4><?php echo $female; ?></h4>
 	<?php if($totalStudent==0): ?>
 		<p>No student available.</p>
 	<?php else : ?>
-	<div class="container">
+	<div class="container col-md-5">
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
 		<br><br>
 		<canvas id ="attendence"></canvas>
+		<br><br>
+		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
 	</div>
 <?php endif; ?>
 
@@ -75,12 +85,17 @@
 	var performenceChart = document.getElementById("performence");
 	var problemChart = document.getElementById("problem");
 	var attendenceChart = document.getElementById("attendence");
+	var maleFemale = document.getElementById("ratio");
 	Chart.defaults.global.defaultFontFamily = "Lato";
 	Chart.defaults.global.defaultFontSize = 18;
 	var grade = {
 		label : 'Grade in % of student',
 		data: [<?php echo $percentageA; ?>,<?php echo $percentageB; ?>,<?php echo $percentageC; ?>],
-		backgroundColor : 'rgba(99, 132, 0, 0.6)',
+		backgroundColor : [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)'
+          ],
 		borderWidth: 0,
   		yAxisID: "y-axis-percentage"
 	};
@@ -100,7 +115,7 @@
 		  }
 		};
 	var barChart =  new Chart(performenceChart, {
-					  type: 'bar',
+					  type: 'doughnut',
 					  data: percentage,
 					  options : chartOptions
 					});
@@ -162,6 +177,39 @@
 					  type: 'bar',
 					  data: percentage3,
 					  options : chartOpt
+					});
+
+	/////////////////
+	var da = {
+		label : 'Male Female Ratio',
+		data: [<?php echo $male; ?>,<?php echo $female; ?>],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(maleFemale, {
+					  type: 'pie',
+					  data: ma,
+					  options : char
 					});
 
 

@@ -118,4 +118,10 @@
 		   regional_id int REFERENCES regional(id),
 		   id serial PRIMARY KEY
 	)";
+	const TBALE_QUESTION = "CREATE TABLE IF NOT EXISTS question(
+				id serial PRIMARY KEY,
+				po_id int REFERENCES po(id),
+				school_id int REFERENCES school(id),
+				grade varchar(10)
+		);"
  ?>

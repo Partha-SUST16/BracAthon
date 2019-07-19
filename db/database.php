@@ -76,6 +76,7 @@ require_once 'functions.php';
 				pg_query($this->_ref,GET_STUDENTS);
 				pg_query($this->_ref,GET_PERFORMENCE_school);
 				pg_query($this->_ref,GET_ALL_PROBLEM);
+				pg_query($this->_ref,TBALE_QUESTION);
 			} catch (Exception $e) {
 				echo $e;
 			}
