@@ -58,12 +58,10 @@ public class AddStudent extends AppCompatActivity {
 
                 if(id==R.id.menuMyDashboard)
                 {
-                    Toast.makeText(AddStudent.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),TeacherDashboard.class));
                 }
                 else if(id==R.id.menuMyProfile)
                 {
-                    Toast.makeText(AddStudent.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),TeacherProfile.class));
                 }
                 else if(id==R.id.menuEditProfile)
@@ -77,11 +75,19 @@ public class AddStudent extends AppCompatActivity {
                 else if(id == R.id.menuAddStudent)
                 {
                     Toast.makeText(AddStudent.this,"Add Student CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),AddStudent.class));
+                    //startActivity(new Intent(getApplicationContext(),AddStudent.class));
                 }
                 else if(id == R.id.menuLogout)
                 {
                     Toast.makeText(AddStudent.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
+                }
+                else if(id == R.id.menuAddProblem)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddProblem.class));
+                }
+                else if(id == R.id.menuAddPerformance)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddPerformance.class));
                 }
                 return true;
             }

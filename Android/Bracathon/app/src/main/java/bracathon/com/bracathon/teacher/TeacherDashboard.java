@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -29,12 +28,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import bracathon.com.bracathon.Constant;
-import bracathon.com.bracathon.MainActivity;
 import bracathon.com.bracathon.R;
 import bracathon.com.bracathon.RequestHandler;
 import bracathon.com.bracathon.SharedPrefManager;
@@ -53,13 +49,18 @@ public class TeacherDashboard extends AppCompatActivity {
     String username;
     private Button testB;
     List<Double> arr ;
-    List<Double> performence ;;
+    List<Double> performence ;
+    List<Double> attendence;
+    List<String> studentName;
     BarChart barChart;
+    BarChart attandenceChart, performanceChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         arr = new ArrayList<>();
         performence = new ArrayList<>();
+        attendence = new ArrayList<>();
+        studentName = new ArrayList<>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
         sharedPrefManager = SharedPrefManager.getInstance(getApplicationContext());
@@ -84,7 +85,6 @@ public class TeacherDashboard extends AppCompatActivity {
                 }
                 else if(id==R.id.menuMyProfile)
                 {
-                    Toast.makeText(TeacherDashboard.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),TeacherProfile.class));
                 }
                 else if(id==R.id.menuEditProfile)
@@ -97,12 +97,19 @@ public class TeacherDashboard extends AppCompatActivity {
                 }
                 else if(id == R.id.menuAddStudent)
                 {
-                    Toast.makeText(TeacherDashboard.this,"Add Student CLICKED",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),AddStudent.class));
                 }
                 else if(id == R.id.menuLogout)
                 {
                     Toast.makeText(TeacherDashboard.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
+                }
+                else if(id == R.id.menuAddProblem)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddProblem.class));
+                }
+                else if(id == R.id.menuAddPerformance)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddPerformance.class));
                 }
                 return true;
             }
@@ -132,8 +139,15 @@ public class TeacherDashboard extends AppCompatActivity {
     }
     private void getValue(){
        // progressDialog.show();
-         barChart = (BarChart) findViewById(R.id.attendance_bar_chart);
+        barChart = (BarChart) findViewById(R.id.problem_bar_chart);
         barChart.setBarMaxValue(100);
+
+        performanceChart = (BarChart) findViewById(R.id.performance_bar_chart);
+        performanceChart.setBarMaxValue(100);
+
+        attandenceChart = (BarChart) findViewById(R.id.attendance_bar_chart);
+        attandenceChart.setBarMaxValue(10);
+
         Toast.makeText(getApplicationContext(),Data.school_id,Toast.LENGTH_SHORT).show();
         Toast.makeText(getApplicationContext(),Data.user_id,Toast.LENGTH_LONG).show();
         StringRequest stringRequest = new StringRequest(
@@ -151,16 +165,27 @@ public class TeacherDashboard extends AppCompatActivity {
                                 arr.add((double) obj.getInt("major"));
                                 arr.add((double) obj.getInt("minor"));
                                 arr.add((double) obj.getInt("normal"));
+
                                 performence.add((double) obj.getInt("a"));
                                 performence.add((double) obj.getInt("b"));
                                 performence.add((double) obj.getInt("c"));
+
                                 JSONArray bal = obj.getJSONArray("student");
-                                for(int i =0;i<bal.length();i++)
+
+                                for(int i =0;i<bal.length();i++){
                                     Log.d("Check",bal.getString(i));
-                                    //Toast.makeText(getApplicationContext(),bal.getString(i), Toast.LENGTH_LONG).show();
+                                    studentName.add(bal.getString(i));
+                                }
+
                                 JSONArray ho = obj.getJSONArray("attendence");
-                                for(int i =0;i<bal.length();i++)
+                                for(int i =0;i<bal.length();i++){
                                     Log.d("Check",ho.getString(i));
+                                    double temp = Double.parseDouble(ho.getString(i));
+                                    attendence.add(temp);
+                                }
+
+                                //problem Chart
+
                                 BarChartModel barChartModel = new BarChartModel();
                                 double  major = arr.get(0);
                                 double minor = arr.get(1);
@@ -181,8 +206,48 @@ public class TeacherDashboard extends AppCompatActivity {
                                 barChartModel2.setBarText("Normal");
                                 barChartModel2.setBarColor(Color.parseColor("#9C27B0"));
                                 barChart.addBar(barChartModel2);
-                                //Toast.makeText(getApplicationContext(),Double.toString(arr.get(2)), Toast.LENGTH_LONG).show();
-                                //finish();
+
+
+
+                                //performance chart
+
+                                double performanceA = performence.get(0);
+                                double performanceB = performence.get(1);
+                                double performanceC = performence.get(2);
+
+                                BarChartModel bm1 = new BarChartModel();
+                                bm1.setBarValue((int)performanceA);
+                                bm1.setBarText("A");
+                                bm1.setBarColor(Color.parseColor("#9C27B0"));
+                                performanceChart.addBar(bm1);
+
+                                BarChartModel bm2 = new BarChartModel();
+                                bm2.setBarValue((int)performanceB);
+                                bm2.setBarText("B");
+                                bm2.setBarColor(Color.parseColor("#9C27B0"));
+                                performanceChart.addBar(bm2);
+
+                                BarChartModel bm3 = new BarChartModel();
+                                bm3.setBarValue((int)performanceC);
+                                bm3.setBarText("C");
+                                bm3.setBarColor(Color.parseColor("#9C27B0"));
+                                performanceChart.addBar(bm3);
+
+
+                                //Attendence Chart
+
+                                BarChartModel barModel;
+                                for(int i=0;i<bal.length();i++){
+                                    barModel = new BarChartModel();
+
+                                    barModel.setBarText(studentName.get(i));
+                                    double temp = attendence.get(i);
+                                    barModel.setBarValue((int) temp);
+                                    barModel.setBarColor(Color.parseColor("#9C27B0"));
+                                    attandenceChart.addBar(barModel);
+                                }
+
+
                             }else{
                                 Toast.makeText(
                                         getApplicationContext(),

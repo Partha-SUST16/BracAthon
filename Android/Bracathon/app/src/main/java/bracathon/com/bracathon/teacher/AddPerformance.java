@@ -1,4 +1,4 @@
-package bracathon.com.bracathon.program_operator;
+package bracathon.com.bracathon.teacher;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,24 +9,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import bracathon.com.bracathon.R;
-import bracathon.com.bracathon.teacher.AddStudent;
-import bracathon.com.bracathon.teacher.TeacherDashboard;
-import bracathon.com.bracathon.teacher.TeacherProfile;
 
-public class PoProfile extends AppCompatActivity {
+public class AddPerformance extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+    private EditText studentID,examID,subjectName,grade;
+    private Button insert;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_po_profile);
+        setContentView(R.layout.activity_add_performance);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.poDrawerID);
+        drawerLayout = (DrawerLayout) findViewById(R.id.teacherDrawerID);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.Open,R.string.Close);
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
@@ -34,7 +36,7 @@ public class PoProfile extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.PoNavigationID);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.TeacherNavigationID);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -42,29 +44,35 @@ public class PoProfile extends AppCompatActivity {
 
                 if(id==R.id.menuMyDashboard)
                 {
-                    Toast.makeText(PoProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),PoDashboard.class));
+                    startActivity(new Intent(getApplicationContext(),TeacherDashboard.class));
                 }
                 else if(id==R.id.menuMyProfile)
                 {
-                    Toast.makeText(PoProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),TeacherProfile.class));
                 }
                 else if(id==R.id.menuEditProfile)
                 {
-                    Toast.makeText(PoProfile.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPerformance.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
                 }
-                else if(id==R.id.menuTeacherList)
+                else if(id==R.id.menuStudentList)
                 {
-                    Toast.makeText(PoProfile.this,"Teacher List Clicked",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPerformance.this,"Student List Clicked",Toast.LENGTH_SHORT).show();
                 }
-                else if(id == R.id.menuAddTeacher)
+                else if(id == R.id.menuAddStudent)
                 {
-                    Toast.makeText(PoProfile.this,"Add teacher CLICKED",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),AddTeacher.class));
+                    startActivity(new Intent(getApplicationContext(),AddStudent.class));
                 }
                 else if(id == R.id.menuLogout)
                 {
-                    Toast.makeText(PoProfile.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPerformance.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
+                }
+                else if(id == R.id.menuAddProblem)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddProblem.class));
+                }
+                else if(id == R.id.menuAddPerformance)
+                {
+                    //startActivity(new Intent(getApplicationContext(),AddPerformance.class));
                 }
                 return true;
             }
@@ -73,9 +81,14 @@ public class PoProfile extends AppCompatActivity {
         ///Drawer & NavigationBar ends.
 
 
+        studentID = (EditText) findViewById(R.id.selectStudentID);
+        examID = (EditText) findViewById(R.id.selectExamID);
+        subjectName = (EditText) findViewById(R.id.selectSubjectID);
+        grade = (EditText) findViewById(R.id.selectGradeID);
+        insert = (Button) findViewById(R.id.insertbtnId);
+
 
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return actionBarDrawerToggle.onOptionsItemSelected(item) ||super.onOptionsItemSelected(item);
@@ -91,6 +104,4 @@ public class PoProfile extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-
 }

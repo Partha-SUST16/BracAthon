@@ -44,6 +44,24 @@
 
     </group>
 
+    <group
+        android:id="@+id/reportGroup"
+        android:visible="true">
+
+        <item
+            android:id="@+id/menuAddProblem"
+            android:title="Add Problem"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+        <item
+            android:id="@+id/menuAddPerformance"
+            android:title="Add Performance"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
+
+    </group>
+
     <item
         android:id="@+id/menuLogout"
         android:title="Log Out"

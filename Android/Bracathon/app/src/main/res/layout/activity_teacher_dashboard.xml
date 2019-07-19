@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Student Attendance Chart"
+                android:text="Problem Chart"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:textColor="#000000"
@@ -43,15 +43,87 @@
                 <me.ithebk.barchart.BarChart
                     android:padding="5dp"
                     android:layout_gravity="center"
-                    android:id="@+id/attendance_bar_chart"
-                    app:bar_width="15dp"
+                    android:id="@+id/problem_bar_chart"
+                    app:bar_width="50dp"
                     app:bar_color="@color/colorPrimary"
                     app:bar_text_color="#000000"
                     app:bar_type="vertical"
                     app:bar_text_size="10sp"
                     app:bar_show_auto_color="false"
                     app:bar_max_value="100"
-                    app:bar_spaces = "5dp"
+                    app:bar_spaces = "50dp"
+                    app:bar_show_value="true"
+                    app:bar_show_animation="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="#e4e4e4"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Performance Chart"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:padding="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp">
+
+                <me.ithebk.barchart.BarChart
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/performance_bar_chart"
+                    app:bar_width="50dp"
+                    app:bar_color="@color/colorPrimary"
+                    app:bar_text_color="#000000"
+                    app:bar_type="vertical"
+                    app:bar_text_size="10sp"
+                    app:bar_show_auto_color="false"
+                    app:bar_max_value="100"
+                    app:bar_spaces = "50dp"
+                    app:bar_show_value="true"
+                    app:bar_show_animation="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="#e4e4e4"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student Attandence Chart"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:padding="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:padding="10dp">
+
+                <me.ithebk.barchart.BarChart
+                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/attendance_bar_chart"
+                    app:bar_width="50dp"
+                    app:bar_color="@color/colorPrimary"
+                    app:bar_text_color="#000000"
+                    app:bar_type="vertical"
+                    app:bar_text_size="10sp"
+                    app:bar_show_auto_color="false"
+                    app:bar_max_value="100"
+                    app:bar_spaces = "50dp"
                     app:bar_show_value="true"
                     app:bar_show_animation="true"
                     android:layout_width="match_parent"

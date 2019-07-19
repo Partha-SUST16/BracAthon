@@ -79,6 +79,14 @@ public class TeacherProfile extends AppCompatActivity {
                 {
                     Toast.makeText(TeacherProfile.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();
                 }
+                else if(id == R.id.menuAddProblem)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddProblem.class));
+                }
+                else if(id == R.id.menuAddPerformance)
+                {
+                    startActivity(new Intent(getApplicationContext(),AddPerformance.class));
+                }
                 return true;
             }
         });
