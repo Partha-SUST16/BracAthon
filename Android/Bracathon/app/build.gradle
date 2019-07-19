@@ -38,6 +38,7 @@ dependencies {
     implementation('com.coinbase.android:coinbase-android-sdk:1.0.1') {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+    api 'com.clarifai.clarifai-api2:core:2.3.0'
 
     android {
         useLibrary 'org.apache.http.legacy'

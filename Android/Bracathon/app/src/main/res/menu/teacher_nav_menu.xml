@@ -18,12 +18,6 @@
             android:icon="@drawable/ic_launcher_foreground">
         </item>
 
-        <item
-            android:id="@+id/menuEditProfile"
-            android:title="Edit Profile"
-            android:icon="@drawable/ic_launcher_foreground">
-        </item>
-
     </group>
 
     <group
@@ -47,6 +41,12 @@
     <group
         android:id="@+id/reportGroup"
         android:visible="true">
+
+        <item
+            android:id="@+id/menuAttendance"
+            android:title="Give Attendance"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
 
         <item
             android:id="@+id/menuAddProblem"

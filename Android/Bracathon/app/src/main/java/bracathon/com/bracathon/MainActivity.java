@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import bracathon.com.bracathon.program_operator.PoLogin;
+import bracathon.com.bracathon.teacher.FaceActivity;
 import bracathon.com.bracathon.teacher.TeacherDashboard;
 import bracathon.com.bracathon.teacher.TeacherLogin;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         pobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),PoLogin.class));
+                startActivity(new Intent(getApplicationContext(), FaceActivity.class));
             }
         });
 

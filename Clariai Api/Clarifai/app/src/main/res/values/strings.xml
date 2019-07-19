@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Clarifai_FaceRecognition</string>
+    <string name="Clarifai_Api_Key">b5a9febc406247d0aa00bf8a488e8a6f</string>
+    <string name="FD_workflowID">34ce21a40cc24b6b96ffee54aabff139</string>
+
+
+    <string name="error_external_storage_permission_not_granted">You must accept this permission so we can upload your images!</string>
+
+    <string name="error_while_contacting_api">Error while contacting Clarifai API</string>
+    <string name="no_results_from_api">API did not return any results</string>
+
+    <string name="upload_image_hint">Click the button in the bottom-right corner to upload an image!</string>
+</resources>

@@ -62,9 +62,10 @@ public class TeacherProfile extends AppCompatActivity {
                 {
                     Toast.makeText(TeacherProfile.this,"My Profile CLICKED",Toast.LENGTH_SHORT).show();
                 }
-                else if(id==R.id.menuEditProfile)
+                else if(id==R.id.menuAttendance)
                 {
-                    Toast.makeText(TeacherProfile.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TeacherProfile.this," Attendance CLICKED",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),FaceActivity.class));
                 }
                 else if(id==R.id.menuStudentList)
                 {
@@ -98,9 +99,6 @@ public class TeacherProfile extends AppCompatActivity {
         teacherSchool =(TextView) findViewById(R.id.schoolNameID);
         teacherGender = (TextView)findViewById(R.id.teacherGenderID);
         teacherAddress = (TextView)findViewById(R.id.teacherAddressID);
-        teacherBranch = (TextView)findViewById(R.id.branchNameID);
-        teacherArea = (TextView)findViewById(R.id.areaNameID);
-        teacherRegion = (TextView)findViewById(R.id.regionNameID);
         teacherPo = (TextView)findViewById(R.id.poNameID);
         teacherPhone = (TextView)findViewById(R.id.teacherPhoneID);
         ini();

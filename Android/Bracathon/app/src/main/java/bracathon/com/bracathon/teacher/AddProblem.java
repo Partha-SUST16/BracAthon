@@ -51,9 +51,10 @@ public class AddProblem extends AppCompatActivity {
                 {
                     startActivity(new Intent(getApplicationContext(),TeacherProfile.class));
                 }
-                else if(id==R.id.menuEditProfile)
+                else if(id==R.id.menuAttendance)
                 {
-                    Toast.makeText(AddProblem.this,"Edit Profile CLICKED",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddProblem.this," Attendance CLICKED",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),FaceActivity.class));
                 }
                 else if(id==R.id.menuStudentList)
                 {
