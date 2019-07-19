@@ -9,7 +9,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import bracathon.com.bracathon.R;
 import bracathon.com.bracathon.teacher.AddStudent;
@@ -20,6 +24,7 @@ public class PoProfile extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private TextView name,phone,address,gender,branch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +77,28 @@ public class PoProfile extends AppCompatActivity {
 
         ///Drawer & NavigationBar ends.
 
+        name = findViewById(R.id.poNameid);
+        phone = findViewById(R.id.poPhone);
+        address = findViewById(R.id.poAddress);
+        gender = findViewById(R.id.poGender);
+        branch = findViewById(R.id.poBranch);
+        ini();
 
-
+    }
+    private void ini(){
+        try {
+            JSONObject obj = new JSONObject(getIntent().getStringExtra("information"));
+            name.setText(obj.getString("name"));
+            phone.setText(obj.getString("phone"));
+            gender.setText(obj.getString("gender"));
+            branch.setText(obj.getString("branch"));
+            address.setText(obj.getString("address"));
+            // bracathon.com.bracathon.teacher.Data.school_id = obj.getString("school_id");
+            //Data.user_id = obj.getString("id");
+            DataPO.user_id = obj.getString("id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -45,7 +45,7 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/teacherNameID"
+                    android:id="@+id/poNameid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imgUser"
@@ -56,19 +56,6 @@
                     android:textColor="#ffffff"
                     android:textSize="32sp" />
 
-
-                <TextView
-                    android:id="@+id/schoolNameID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/teacherNameID"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif"
-                    android:text="School Name"
-                    android:textAllCaps="true"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"/>
 
 
             </RelativeLayout>
@@ -105,6 +92,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/poGender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
@@ -136,6 +124,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/poAddress"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
@@ -167,6 +156,7 @@
                             android:drawableLeft="@drawable/ic_business_color_24dp"/>
 
                         <TextView
+                            android:id="@+id/poBranch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
@@ -181,94 +171,10 @@
                             android:background="#E5E5E5" />
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
-                            android:drawableLeft="@drawable/ic_business_color_24dp"
-                            android:gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="  Area"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Area Name"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#E5E5E5" />
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:gravity="center"
-                            android:drawableLeft="@drawable/ic_business_color_24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" Region"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="  Region Name"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#E5E5E5" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:gravity="center"
-                            android:drawableLeft="@drawable/ic_account_circle_primary_color_24dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="  Assigned PO"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="PO Name"
-                            android:textColor="#000000"
-                            android:textSize="18sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#E5E5E5" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -286,6 +192,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/poPhone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
