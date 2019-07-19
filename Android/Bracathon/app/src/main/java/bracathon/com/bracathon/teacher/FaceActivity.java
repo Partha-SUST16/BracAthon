@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -25,16 +27,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import bracathon.com.bracathon.R;
 import bracathon.com.bracathon.teacher.CustomAdapter;
+import bracathon.com.bracathon.teacher.v2.ClarifaiUtil;
 import clarifai2.api.ClarifaiBuilder;
 import clarifai2.api.ClarifaiClient;
 import clarifai2.api.ClarifaiResponse;
+import clarifai2.dto.input.ClarifaiImage;
 import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.ConceptModel;
 import clarifai2.dto.model.output.ClarifaiOutput;
@@ -72,7 +79,6 @@ public class FaceActivity extends AppCompatActivity {
         buttonUpload = (Button)findViewById(R.id.button_main_upload);
         buttonSubmit = (Button)findViewById(R.id.button_main_submit);
 //        adapter.setData(Collections.<Concept>emptyList());
-        //listItems = new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final TextView text = (TextView)findViewById(R.id.text__id);
@@ -102,9 +108,10 @@ public class FaceActivity extends AppCompatActivity {
                         protected ClarifaiResponse<List<ClarifaiOutput<Concept>>> doInBackground(Void... params) {
 
                             final ConceptModel generalModel = client.getModelByID("Human").executeSync().get().asConceptModel();
-
+                            Log.i("hey", imageBytesSelectedResult.toString());
                             return generalModel.predict()
-                                    .withInputs(ClarifaiInput.forImage("https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"))
+                                    //.withInputs(ClarifaiInput.forImage("https://scontent.fdac14-1.fna.fbcdn.net/v/t31.0-8/31184649_1661122980602803_3285019704872136481_o.jpg?_nc_cat=109&_nc_oc=AQnBMU84ZR207HaOT2OyTZTxC56PQfhJhksf8eoJD6-4G9hgwwEUNtUV_1X5OChxMPM&_nc_ht=scontent.fdac14-1.fna&oh=ed08696ac21a83d345d836323d41b766&oe=5DB6E8D0"))
+                                    .withInputs(ClarifaiInput.forImage(ClarifaiImage.of(imageBytesSelectedResult)))
                                     .executeSync();
 
                         }
@@ -130,6 +137,7 @@ public class FaceActivity extends AppCompatActivity {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                Log.i("jarin", predictions.get(0).data().toString());
                                 //text.setText(data);
                             }
 
@@ -149,6 +157,60 @@ public class FaceActivity extends AppCompatActivity {
 
 
 
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent resultData) {
+        // The ACTION_OPEN_DOCUMENT intent was sent with the request code
+        // READ_REQUEST_CODE. If the request code seen here doesn't match, it's the
+        // response to some other intent, and the code below shouldn't run at all.
+        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK) {
+
+            try {
+                Uri uri = null;
+                if (resultData != null) {
+                    final byte[] imageBytes = ClarifaiUtil.retrieveSelectedImage(this, resultData);
+                    imageBytesSelectedResult = imageBytes;
+                }
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
+        }  else if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK) {
+
+            try {
+                File folder = new File(folderPath);
+
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
+                File prescriptionImage = new File(folder, fileName);
+                String imageFilePath = prescriptionImage.getPath();
+
+                String filepath = imageFilePath;
+                File imagefile = new File(filepath);
+                FileInputStream fis = null;
+                try {
+                    fis = new FileInputStream(imagefile);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                Bitmap bm = BitmapFactory.decodeStream(fis);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] b = baos.toByteArray();
+                imageBytesSelectedResult = b;
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+            }
+        }
     }
 
 

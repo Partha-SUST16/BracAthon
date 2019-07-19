@@ -44,14 +44,16 @@
 
         </LinearLayout>
 
+
     </ScrollView>
+
     <TextView
         android:text="@string/app_name"
         android:id="@+id/text__id"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
         />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
