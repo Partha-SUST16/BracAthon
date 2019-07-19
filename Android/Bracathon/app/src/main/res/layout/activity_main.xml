@@ -25,30 +25,6 @@
             android:textColor="#ffffff"
             android:layout_marginBottom="10dp"
             />
-        <Button
-            android:id="@+id/poBtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="PO Login"
-            android:background="@drawable/button_background"
-            android:padding="15dp"
-            android:textAllCaps="false"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="10dp"
-            />
-        <Button
-            android:id="@+id/branchBtn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="Branch Login"
-            android:background="@drawable/button_background"
-            android:padding="15dp"
-            android:textAllCaps="false"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="10dp"
-            />
 
     </LinearLayout>
 

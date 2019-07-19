@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +45,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.Holder> {
         Concept concept = concepts.get(position);
 
         holder.name.setText(concept.name() != null ? concept.name() : concept.id());
-        if(concept.value()>0.40){
+        if(concept.value()>0.25){
             holder.predictionResult.setText("1");
+
             Data.attendence = Data.attendence+","+(concept.name() != null ? concept.name() : concept.id());
+            Toast.makeText(context,Data.attendence,Toast.LENGTH_SHORT).show();
         }
         else{
             holder.predictionResult.setText("0");

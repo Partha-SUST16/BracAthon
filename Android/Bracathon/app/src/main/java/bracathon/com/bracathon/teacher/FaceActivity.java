@@ -3,10 +3,12 @@ package bracathon.com.bracathon.teacher;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,18 +26,32 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import bracathon.com.bracathon.Constant;
 import bracathon.com.bracathon.R;
+import bracathon.com.bracathon.RequestHandler;
 import bracathon.com.bracathon.teacher.CustomAdapter;
 import bracathon.com.bracathon.teacher.v2.ClarifaiUtil;
 import clarifai2.api.ClarifaiBuilder;
@@ -46,9 +62,11 @@ import clarifai2.dto.input.ClarifaiInput;
 import clarifai2.dto.model.ConceptModel;
 import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.prediction.Concept;
+import me.ithebk.barchart.BarChartModel;
 //import com.clarifai.clarifai_android_sdk.core.Clarifai;
 
 public class FaceActivity extends AppCompatActivity {
+    private ProgressDialog progressDialog;
 
     private final int REQUEST_CODE_PERMISSION_READ_EXTERNAL_STORAGE = 102;
     private final int REQUEST_CODE_GALLERY = 103;
@@ -57,7 +75,7 @@ public class FaceActivity extends AppCompatActivity {
 
     private final String apiKey = "b5a9febc406247d0aa00bf8a488e8a6f";
     private Button buttonUpload;
-    private Button buttonSubmit;
+    private Button buttonSubmit,addTodb;
     private TextView text;
     private Dialog dialogAttachment;
     private String folderPath;
@@ -75,6 +93,12 @@ public class FaceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face);
         Data.attendence = "";
+
+
+        addTodb = (Button) findViewById(R.id.button_add_todb);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Uploading...");
 
         buttonUpload = (Button)findViewById(R.id.button_main_upload);
         buttonSubmit = (Button)findViewById(R.id.button_main_submit);
@@ -103,6 +127,8 @@ public class FaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    progressDialog.show();
+                    Data.attendence = "";
                     new AsyncTask<Void, Void, ClarifaiResponse<List<ClarifaiOutput<Concept>>>>() {
                         @Override
                         protected ClarifaiResponse<List<ClarifaiOutput<Concept>>> doInBackground(Void... params) {
@@ -131,9 +157,11 @@ public class FaceActivity extends AppCompatActivity {
                                 String jsonData = String.valueOf(predictions);
                                 Log.d("brac", data);
                                 try {
+                                    progressDialog.dismiss();
                                     adapter = new CustomAdapter(predictions.get(0).data(), getApplicationContext());
                                     recyclerView.setAdapter(adapter);
                                     recyclerView.notify();
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -153,10 +181,68 @@ public class FaceActivity extends AppCompatActivity {
             }
         });
 
+        addTodb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                call();
+            }
+        });
 
 
+    }
+    private void call(){
+        Log.d("Check123",Data.attendence);
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                Constant.attendence+"?school="+Integer.parseInt(Data.school_id)+"&name="+Data.attendence,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // progressDialog.dismiss();
+                        try {
+                            Log.d("Check","["+response+"]");
+                            JSONObject obj = new JSONObject(response);
+
+                        } catch (JSONException e) {
+                            Log.d("Error","["+e.getMessage()+"]");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //progressDialog.dismiss();
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "["+error.getMessage()+"]",
+                                Toast.LENGTH_LONG
+                        ).show();
+                        Log.d("Error","["+error.getMessage()+"]");
+                    }
+                }
+        ) {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                if (response.headers == null)
+                {
+                    // cant just set a new empty map because the member is final.
+                    response = new NetworkResponse(
+                            response.statusCode,
+                            response.data,
+                            Collections.<String, String>emptyMap(), // this is the important line, set an empty but non-null map.
+                            response.notModified,
+                            response.networkTimeMs);
 
 
+                }
+
+                return super.parseNetworkResponse(response);
+            }
+
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
 

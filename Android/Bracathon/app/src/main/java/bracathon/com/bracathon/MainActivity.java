@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         teacherbtn = (Button) findViewById(R.id.teacherBtn);
-        pobtn = (Button) findViewById(R.id.poBtn);
-        branchbtn = (Button) findViewById(R.id.branchBtn);
 
         teacherbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,23 +28,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),TeacherLogin.class));
             }
         });
-
-        pobtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), FaceActivity.class));
-            }
-        });
-
-        branchbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-
-
-
     }
 }
