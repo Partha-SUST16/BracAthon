@@ -42,7 +42,7 @@ $result = [];
 		 		';
 		 	}
 	}
-	echo json_encode($result);
+	//echo json_encode($result);
  ?>
   <div class="d-flex justify-content-center mt-3">
 		<div class="col-md-3 list-group-item list-group-item-success">

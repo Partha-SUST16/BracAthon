@@ -2,6 +2,105 @@
 
 <?php startblock('header') ?>
 	<title>DashBoard</title>
+	<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Overall Performence of all school"
+	},
+	axisX: {
+		valueFormatString: "DD MMM,YY"
+	},
+	axisY: {
+		title: "Parameter",
+		includeZero: false,
+		suffix: ""
+	},
+	legend:{
+		cursor: "pointer",
+		fontSize: 16,
+		itemclick: toggleDataSeries
+	},
+	toolTip:{
+		shared: true
+	},
+	data: [{
+		name: "Attendence Record",
+		type: "spline",
+		yValueFormatString: "#0.##",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(2017,1,24), y: 31 },
+			{ x: new Date(2017,2,25), y: 31 },
+			{ x: new Date(2017,3,26), y: 29 },
+			{ x: new Date(2017,4,27), y: 29 },
+			{ x: new Date(2017,5,28), y: 31 },
+			{ x: new Date(2017,6,29), y: 30 },
+			{ x: new Date(2017,7,30), y: 29 }
+		]
+	},
+	{
+		name: "Performence Record",
+		type: "spline",
+		yValueFormatString: "#0.##",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(2017,1,24), y: 20 },
+			{ x: new Date(2017,2,25), y: 20 },
+			{ x: new Date(2017,3,26), y: 25 },
+			{ x: new Date(2017,4,27), y: 25 },
+			{ x: new Date(2017,5,28), y: 25 },
+			{ x: new Date(2017,6,29), y: 25 },
+			{ x: new Date(2017,7,30), y: 25 }
+		]
+	},
+	{
+		name: "Problem Solved",
+		type: "spline",
+		yValueFormatString: "#0.##",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(2017,1,24), y: 22 },
+			{ x: new Date(2017,2,25), y: 19 },
+			{ x: new Date(2017,3,26), y: 23 },
+			{ x: new Date(2017,4,27), y: 24 },
+			{ x: new Date(2017,5,28), y: 24 },
+			{ x: new Date(2017,6,29), y: 23 },
+			{ x: new Date(2017,7,30), y: 23 }
+		]
+	},
+	{
+		name: "Facility provided to Unprivileged",
+		type: "spline",
+		yValueFormatString: "#0.##",
+		showInLegend: true,
+		dataPoints: [
+			{ x: new Date(2017,1,24), y: 5 },
+			{ x: new Date(2017,2,25), y: 6 },
+			{ x: new Date(2017,3,26), y: 4 },
+			{ x: new Date(2017,4,27), y: 7 },
+			{ x: new Date(2017,5,28), y: 6 },
+			{ x: new Date(2017,6,29), y: 10 },
+			{ x: new Date(2017,7,30), y: 2 }
+		]
+	}]
+});
+chart.render();
+
+function toggleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	}
+	else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+}
+
+}
+</script>
 <?php endblock() ?>
 <?php startblock('container') ?>
 <?php 
@@ -16,6 +115,8 @@
 		$normalProblem = 0;
 		$minorProblem = 0;
 		$majorProblem = 0;
+		$studentName = [];
+	$attendenceList = array();
 	$poList = [];
 	$query = "SELECT po_id FROM branchpo WHERE branch_id = $branch_id;";
 	$res = pg_query($db->getRefference(),$query);
@@ -45,6 +146,29 @@
 			$gradeB = $gradeB + $col['1'];
 			$gradeC = $gradeC + $col['2'];
 			$totalStudent =$totalStudent+$col['0']+$col['1']+$col['2'];
+
+			//attendence
+			$studentList = [];
+			$query = "SELECT id,name FROM student WHERE school_id = $school_id;";
+			
+			$res = pg_query($db->getRefference(),$query);
+			while($data = pg_fetch_object($res)){
+				array_push($studentList, $data);
+			}
+			
+			for($i=0;$i<COUNT($studentList);$i++){
+				$studentName[$i] = $studentList[$i]->name;
+			}
+		
+			
+			for($i=0;$i<count($studentList);$i++){
+				$student_id = $studentList[$i]->id;
+				$query = "SELECT status FROM attendence WHERE school_id = $school_id AND student_id = $student_id AND status  = 1;";
+				$res = pg_query($db->getRefference(),$query);
+				$col = pg_fetch_all_columns($res);
+				$dummy =COUNT($col);
+				array_push($attendenceList,$dummy);
+			}
 
 			//problem
 			$res = pg_query($db->getRefference(),"SELECT COUNT(id) FROM problem WHERE school_id = $school_id AND is_solved = false GROUP BY catagory;");
@@ -77,14 +201,25 @@
 	<!-- <h4><?php echo $gradeC; ?></h4><br>
 	<h4><?php echo $gradeA; ?></h4><br>
 	<h4><?php echo $totalStudent ?></h4> -->
-	<div class="container">
+	<div class="container col-md-5">
+		<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+		<br><br>
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
+		<br><br>
+		<canvas id ="attendence"></canvas>
+		<br><br>
+		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
+		<br><br>
+		<canvas id ="ethnic"></canvas>
 	</div>
 	<script>
 		var performenceChart = document.getElementById("performence").getContext("2d");
 		var problemChart = document.getElementById("problem");
+		var maleFemale = document.getElementById("maleFemale");
+		var attendenceChart = document.getElementById("attendence");
+		var ethnic = document.getElementById("ethnic");
 		Chart.defaults.global.defaultFontFamily = "Lato";
 		Chart.defaults.global.defaultFontSize = 18;
 		var problems = {
@@ -147,5 +282,144 @@
 						  data: percentage_,
 						  options : chartOp_
 						});
+		var problems3 = {
+		label : 'Attendence',
+		data: 
+<?php echo json_encode($attendenceList); ?>,
+		backgroundColor : 
+            'rgba(255, 206, 86, 0.6)',
+		borderWidth: 1,
+  		yAxisID: "y-axis-attendence"
+	};
+	var percentage3 = {
+		labels :<?php echo json_encode($studentName); ?>,
+		datasets:[problems3]
+	}
+
+	var chartOpt = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-attendence"
+		    }]
+		  }
+		};
+	var kara =  new Chart(attendenceChart, {
+					  type: 'bar',
+					  data: percentage3,
+					  options : chartOpt
+					});
+	var da = {
+		label : 'Male Female Ratio',
+		data: [40,60],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(maleFemale, {
+					  type: 'pie',
+					  data: ma,
+					  options : char
+					});
+	/////////////////////
+	var da_ = {
+		label : 'Male Female Ratio',
+		data: [40,60],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma_ = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(test, {
+					  type: 'bar',
+					  data: ma,
+					  options : char
+					});
+
+
+    ////////////////////////////////////
+    /////////////////////
+	var da_ = {
+		label : 'facilate education to ethnic and disabled people',
+		data: [40,60,20,50,69,10,60,70,50,10,90,25],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(139, 173, 88, 1)',
+            'rgba(173, 88, 88, 1)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(139, 173, 88, 1)',
+            'rgba(173, 88, 88, 1)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(139, 173, 88, 1)',
+            'rgba(173, 88, 88, 1)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma_ = {
+		labels : ["January","February","March","April","May","june","july","august","septembar","octobar","novembar","december"],
+		datasets:[da_]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+		// bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	var pie =  new Chart(ethnic, {
+					  type: 'bar',
+					  data: ma_,
+					  options : char
+					});
 	</script>
 </div>

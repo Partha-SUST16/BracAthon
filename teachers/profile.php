@@ -48,7 +48,7 @@
 			<tbody>
 				<?php for($i=0; $i<count($studentList); $i++): ?>
 					<tr>
-						<td><a href="potrack.php?id=<?php echo $studentList[$i]->id; ?>"><?php echo $studentList[$i]->id; ?></a></td>
+						<td><a href="#"><?php echo $studentList[$i]->id; ?></a></td>
 						<td><?php echo $studentList[$i]->name; ?></td>
 						<td><?php echo $studentList[$i]->gender; ?></td>
 					</tr>

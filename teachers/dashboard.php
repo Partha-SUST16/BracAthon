@@ -66,18 +66,18 @@
 
 
 <div class="d-flex justify-content-center">
-	<h4><?php echo $female; ?></h4>
+	<!-- <h4><?php echo $female; ?></h4> -->
 	<?php if($totalStudent==0): ?>
 		<p>No student available.</p>
 	<?php else : ?>
 	<div class="container col-md-5">
-		<canvas id ="performence"></canvas>
+		<canvas id ="performence" height="50px" width="80px"></canvas>
 		<br><br>
-		<canvas id ="problem"></canvas>
+		<canvas id ="problem" height="50px" width="80px"></canvas>
 		<br><br>
-		<canvas id ="attendence"></canvas>
+		<canvas id ="attendence"height="50px" width="80px"></canvas>
 		<br><br>
-		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
+		<canvas id = "maleFemale" height="50px" width="80px"></canvas>
 	</div>
 <?php endif; ?>
 
@@ -85,7 +85,7 @@
 	var performenceChart = document.getElementById("performence");
 	var problemChart = document.getElementById("problem");
 	var attendenceChart = document.getElementById("attendence");
-	var maleFemale = document.getElementById("ratio");
+	var maleFemale = document.getElementById("maleFemale");
 	Chart.defaults.global.defaultFontFamily = "Lato";
 	Chart.defaults.global.defaultFontSize = 18;
 	var grade = {

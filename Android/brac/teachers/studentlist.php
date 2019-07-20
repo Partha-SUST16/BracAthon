@@ -1,7 +1,6 @@
 <?php 
 	include 'base.php';
 	$result = [];
-	$id = $_GET['id'];
 	$school = $_GET['school'];
 	$studentList = [];
 		$db = DB::connection();

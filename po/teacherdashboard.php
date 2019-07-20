@@ -60,18 +60,20 @@
 <?php endblock() ?>
 
 <div class="d-flex justify-content-center">
-	<p4><?php echo $school_id; ?></p4><br>
+	<!-- <p4><?php echo $school_id; ?></p4><br>
 	<p4><?php echo $percentageB; ?></p4><br>
 	<p4><?php echo json_encode($attendenceList); ?></p4><br> -->
 	<?php if($totalStudent==0): ?>
 		<p>No student available.</p>
 	<?php else : ?>
-	<div class="container">
+	<div class="container col-sm-5">
 		<canvas id ="performence"></canvas>
 		<br><br>
 		<canvas id ="problem"></canvas>
 		<br><br>
 		<canvas id ="attendence"></canvas>
+		<br><br>
+		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
 	</div>
 <?php endif; ?>
 
@@ -79,6 +81,8 @@
 	var performenceChart = document.getElementById("performence");
 	var problemChart = document.getElementById("problem");
 	var attendenceChart = document.getElementById("attendence");
+	var maleFemale = document.getElementById("maleFemale");
+
 	Chart.defaults.global.defaultFontFamily = "Lato";
 	Chart.defaults.global.defaultFontSize = 18;
 	var grade = {
@@ -166,6 +170,37 @@
 					  type: 'bar',
 					  data: percentage3,
 					  options : chartOpt
+					});
+	var da = {
+		label : 'Male Female Ratio',
+		data: [40,60],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["Male","Female"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(maleFemale, {
+					  type: 'pie',
+					  data: ma,
+					  options : char
 					});
 
 

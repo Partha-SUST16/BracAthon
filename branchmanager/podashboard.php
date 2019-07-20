@@ -8,7 +8,8 @@
 	<?php 
 		$userid = $_GET['id'];
 		$db = DB::connection();
-
+		try {
+			
 		$totalStudent = 0;
 		$gradeA = 0;
 		$gradeB = 0;
@@ -114,12 +115,15 @@
 		$gradeC = ($gradeC/$totalStudent)*100.0;
 		//$gradeC = $gradeC+0.0001;
 		//print_r($gradeC+"\n");
+		} catch (Exception $e) {
+			echo json_encode("No Information available.");
+		}
 
 	 ?>
 
 
 <div class="d-flex justify-content-center">
-	<p>DashBoard of PO</p>
+	<p class="justify-content-center">DashBoard of PO</p>
 	<!-- <h4><?php echo $totalStudent; ?></h4><br> -->
 	<!-- <h4><?php echo $gradeC; ?></h4><br>
 	<h4><?php echo $gradeA; ?></h4><br>
@@ -132,11 +136,16 @@
 		<canvas id ="attendence"></canvas>
 		<br><br>
 		<canvas id = "maleFemale" height="60px" width="80px"></canvas>
+		<br><br>
+		<canvas id = "schoolGrading"></canvas>
 	</div>
 	<script>
 		var performenceChart = document.getElementById("performence").getContext("2d");
 		var problemChart = document.getElementById("problem");
 		var attendenceChart = document.getElementById("attendence");
+		var schoolGrade = document.getElementById("schoolGrading");
+		var maleFemale = document.getElementById("maleFemale");
+
 		Chart.defaults.global.defaultFontFamily = "Lato";
 		Chart.defaults.global.defaultFontSize = 18;
 		var problems = {
@@ -258,6 +267,42 @@
 		};
 	var pie =  new Chart(maleFemale, {
 					  type: 'pie',
+					  data: ma,
+					  options : char
+					});
+	////////////////////////
+	var da = {
+		label : 'Schrool grading ',
+		data: [50,20,37,48,80],
+		backgroundColor : 
+            [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)']
+          ,
+		borderWidth: 0,
+  		yAxisID: "y-axis-male"
+	};
+	var ma = {
+		labels : ["A","B","C","D","E"],
+		datasets:[da]
+	}
+	var char = {
+		  scales: {
+		    xAxes: [{
+		      barPercentage: .5,
+		      categoryPercentage: 0.6
+		    }],
+		    yAxes: [{
+		      id: "y-axis-male"
+		    }]
+		  }
+		};
+	var pie =  new Chart(schoolGrade, {
+					  type: 'bar',
 					  data: ma,
 					  options : char
 					});

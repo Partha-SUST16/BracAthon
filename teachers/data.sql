@@ -1,0 +1,1 @@
+INSERT INTO attendence(_date,student_id,school_id,status) VALUES ('2015-05-05',4,1,1);
