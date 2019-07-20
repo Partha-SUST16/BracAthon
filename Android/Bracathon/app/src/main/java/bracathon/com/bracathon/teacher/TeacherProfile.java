@@ -69,6 +69,7 @@ public class TeacherProfile extends AppCompatActivity {
                 }
                 else if(id==R.id.menuStudentList)
                 {
+                    startActivity(new Intent(getApplicationContext(),StudentView.class));
                     Toast.makeText(TeacherProfile.this,"Student List Clicked",Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.menuAddStudent)
@@ -83,6 +84,10 @@ public class TeacherProfile extends AppCompatActivity {
                 else if(id == R.id.menuAddProblem)
                 {
                     startActivity(new Intent(getApplicationContext(),AddProblem.class));
+                }
+                else if(id == R.id.menuProblemList)
+                {
+                    startActivity(new Intent(getApplicationContext(),ProblemView.class));
                 }
                 else if(id == R.id.menuAddPerformance)
                 {
@@ -105,8 +110,6 @@ public class TeacherProfile extends AppCompatActivity {
 
 
     }
-
-
 
     private void ini(){
         try {

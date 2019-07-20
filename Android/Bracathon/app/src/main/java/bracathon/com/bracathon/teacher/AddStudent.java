@@ -78,6 +78,10 @@ public class AddStudent extends AppCompatActivity {
                     Toast.makeText(AddStudent.this,"Add Student CLICKED",Toast.LENGTH_SHORT).show();
                     //startActivity(new Intent(getApplicationContext(),AddStudent.class));
                 }
+                else if(id == R.id.menuProblemList)
+                {
+                    startActivity(new Intent(getApplicationContext(),ProblemView.class));
+                }
                 else if(id == R.id.menuLogout)
                 {
                     Toast.makeText(AddStudent.this,"Log Out CLICKED",Toast.LENGTH_SHORT).show();

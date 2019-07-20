@@ -53,6 +53,11 @@
             android:title="Add Problem"
             android:icon="@drawable/ic_launcher_foreground">
         </item>
+        <item
+            android:id="@+id/menuProblemList"
+            android:title="Problem List"
+            android:icon="@drawable/ic_launcher_foreground">
+        </item>
 
         <item
             android:id="@+id/menuAddPerformance"

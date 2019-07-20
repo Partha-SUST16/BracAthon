@@ -88,6 +88,10 @@ public class AddPerformance extends AppCompatActivity {
                 {
                     startActivity(new Intent(getApplicationContext(),AddProblem.class));
                 }
+                else if(id == R.id.menuProblemList)
+                {
+                    startActivity(new Intent(getApplicationContext(),ProblemView.class));
+                }
                 else if(id == R.id.menuAddPerformance)
                 {
                     //startActivity(new Intent(getApplicationContext(),AddPerformance.class));

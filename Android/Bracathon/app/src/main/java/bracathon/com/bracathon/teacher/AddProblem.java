@@ -1,5 +1,6 @@
 package bracathon.com.bracathon.teacher;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -8,12 +9,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import bracathon.com.bracathon.Constant;
 import bracathon.com.bracathon.R;
+import bracathon.com.bracathon.RequestHandler;
 
 public class AddProblem extends AppCompatActivity {
 
@@ -22,6 +39,8 @@ public class AddProblem extends AppCompatActivity {
 
     private EditText category,details;
     private Button insert;
+
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -73,6 +92,10 @@ public class AddProblem extends AppCompatActivity {
                     Toast.makeText(AddProblem.this,"Add Student CLICKED",Toast.LENGTH_SHORT).show();
                     //startActivity(new Intent(getApplicationContext(),AddProblem.class));
                 }
+                else if(id == R.id.menuProblemList)
+                {
+                    startActivity(new Intent(getApplicationContext(),ProblemView.class));
+                }
                 else if(id == R.id.menuAddPerformance)
                 {
                     startActivity(new Intent(getApplicationContext(),AddPerformance.class));
@@ -87,10 +110,64 @@ public class AddProblem extends AppCompatActivity {
         details = (EditText) findViewById(R.id.selectDetailsID);
         insert = (Button) findViewById(R.id.insertBtnID);
 
+        progressDialog = new ProgressDialog(this);
 
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog.show();
+                addProblem();
+            }
+        });
 
+    }
+    private void addProblem(){
+    final String reason = details.getText().toString();
+    final String group = category.getText().toString();
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constant.addproblem+"?school="+Integer.parseInt(Data.school_id),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressDialog.dismiss();
+                            Log.d("Check","["+response+"]");
+                            JSONObject obj = new JSONObject(response);
+                            if(!obj.getBoolean("error")){
+                                Toast.makeText(getApplicationContext(),"SuccessFull",Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getApplicationContext(),"Something went Wrong",Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            Log.d("Error","["+e.getMessage()+"]");
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
+                        Toast.makeText(
+                                getApplicationContext(),
+                                "["+error.getMessage()+"]",
+                                Toast.LENGTH_LONG
+                        ).show();
+                        Log.d("Error","["+error.getMessage()+"]");
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("catagory", group);
+                params.put("reason", reason);
+                return params;
+            }
 
+        };
+
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     @Override

@@ -1,22 +1,15 @@
 package bracathon.com.bracathon.teacher;
 
 public class StudentList {
-    String ID;
-    String name;
-    String gender;
+    private String name,gender,id;
 
-    public StudentList(String ID, String name, String gender) {
-        this.ID = ID;
+    public StudentList(String name, String gender, String id) {
         this.name = name;
         this.gender = gender;
+        this.id = id;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
+    public StudentList() {
     }
 
     public String getName() {
@@ -33,5 +26,13 @@ public class StudentList {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
